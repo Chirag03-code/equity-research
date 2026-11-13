@@ -1,0 +1,8 @@
+Ticker,Sector,Total Return %,CAGR %,Volatility %,Sharpe,Max Drawdown %,Beta
+XOM,Energy,59.4,12.89,24.07,0.46,-20.65,0.24
+CVX,Energy,24.35,5.83,23.09,0.19,-28.79,0.35
+COP,Energy,23.82,5.71,29.43,0.2,-38.09,0.45
+JPM,Financials,153.72,27.4,23.01,0.99,-24.89,0.87
+BAC,Financials,50.73,11.26,25.02,0.39,-31.55,0.94
+GS,Financials,163.88,28.7,28.87,0.88,-31.24,1.31
+SPY,Benchmark,98.81,19.57,15.09,0.99,-19.0,1.0
