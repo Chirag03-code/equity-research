@@ -1,0 +1,13 @@
+,value
+IC,0.0482
+ICIR,0.3936
+Rank IC,0.05
+Rank ICIR,0.4193
+std (Without costs),0.0056
+std (With costs),0.0056
+annualized_return (Without costs),0.1732
+annualized_return (With costs),0.1358
+information_ratio (Without costs),2.0077
+information_ratio (With costs),1.5754
+max_drawdown (Without costs),-0.0757
+max_drawdown (With costs),-0.0829

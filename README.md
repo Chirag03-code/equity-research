@@ -35,5 +35,38 @@ Full per-stock results: [`sector_metrics.csv`](01_openbb_analysis/sector_metrics
     source .venv/bin/activate
     pip install -r requirements.txt
     python 01_openbb_analysis/sector_analysis.py
+## Project 2: Machine learning stock-selection backtest
+
+**Tools:** Python, [Microsoft Qlib](https://github.com/microsoft/qlib), LightGBM, MLflow
+
+**Question:** Can a machine learning model trained on price and volume patterns pick stocks that beat the market after trading costs?
+
+**Method**
+- **Universe:** CSI 300 (China's 300 largest stocks), daily data from Qlib's community dataset
+- **Features:** 158 technical factors (Qlib Alpha158: momentum, volatility, volume, price patterns)
+- **Model:** LightGBM gradient-boosted trees predicting next-period returns. Trained 2008–2014, validated 2015–2016, tested 2017–Jul 2020
+- **Strategy:** each day hold the model's top 50 stocks and swap out up to 5. Trading costs of 0.05% to buy and 0.15% to sell are included.
+
+### Results (test period, 2017 – Jul 2020)
+
+| Metric | Without costs | With costs |
+|---|---|---|
+| Annualized excess return vs. CSI 300 | 17.3% | **13.6%** |
+| Information ratio | 2.01 | **1.58** |
+| Max drawdown (excess return) | -7.6% | **-8.3%** |
+
+Signal quality: **IC 0.048**, Rank IC 0.050 (correlation between predicted and actual next-day returns)
+
+![Backtest performance](02_qlib_ml_backtest/backtest_performance.png)
+
+**Takeaway:** a weak signal (IC ≈ 0.05), applied consistently across 300 stocks, produced steady outperformance (information ratio 1.58). Trading costs reduced excess returns by about 3.7 points a year, which shows why realistic cost assumptions matter in backtesting. Limitation: this tests one historical period in one market. Past backtest performance doesn't guarantee future results.
+
+### How to run
+    python3.12 -m venv .venv-qlib && source .venv-qlib/bin/activate
+    pip install -r 02_qlib_ml_backtest/requirements.txt
+    # download data: see https://github.com/microsoft/qlib#data-preparation
+    cd 02_qlib_ml_backtest
+    MLFLOW_ALLOW_FILE_STORE=true qrun workflow_config_lightgbm_Alpha158.yaml
+    cd .. && python 02_qlib_ml_backtest/summarize_results.py
 
 *For learning and research only, not investment advice.*
